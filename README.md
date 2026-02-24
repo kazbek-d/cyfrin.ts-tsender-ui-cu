@@ -1,7 +1,3 @@
-Certainly! Here is a professionally formatted, modern README for your repository. I’ve refined the language to be more descriptive and structured it for high scannability, while ensuring your specific repository links are front and center.
-
----
-
 # 💸 TSender UI
 
 A high-performance, **100% client-side** interface built for interacting with the **TSender** smart contract ecosystem. This UI allows users to manage bulk transfers and interact with the protocol directly from their browser without a centralized backend.
