@@ -3,7 +3,6 @@
 A high-performance, **100% client-side** interface built for interacting with the **TSender** smart contract ecosystem. This UI allows users to manage bulk transfers and interact with the protocol directly from their browser without a centralized backend.
 
 * **Original Smart Contracts:** [Cyfrin/TSender](https://github.com/Cyfrin/TSender/)
-* **Source Reference:** [Cyfrin/TSender-UI](https://github.com/cyfrin/tsender-ui)
 
 ---
 
@@ -39,6 +38,7 @@ cd cyfrin.ts-tsender-ui-cu
 
 # Install dependencies
 pnpm install
+
 
 # Start the local Anvil blockchain
 pnpm anvil
