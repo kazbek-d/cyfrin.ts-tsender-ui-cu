@@ -1,13 +1,9 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit"
-
-// https://rainbowkit.com/docs/installation
+import AirdropForm from "./../components/AirdropForm"
 
 export default function Home() {
   return (
     <div>
-      <ConnectButton />
-
-      This is my Home Page.
+      <AirdropForm />
     </div>
   );
 }
