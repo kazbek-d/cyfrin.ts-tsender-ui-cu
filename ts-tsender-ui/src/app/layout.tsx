@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode } from "react";
-import { Providers } from "./providers"
-import Header from "./../components/Header"
+import { Providers } from "@/app/providers";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "TSender",
 };
-
-// https://rainbowkit.com/docs/installation
 
 export default function RootLayout(props: { children: ReactNode }) {
   return (

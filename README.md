@@ -2,8 +2,6 @@
 
 A high-performance, **100% client-side** interface built for interacting with the **TSender** smart contract ecosystem. This UI allows users to manage bulk transfers and interact with the protocol directly from their browser without a centralized backend.
 
-* **Original Smart Contracts:** [Cyfrin/TSender](https://github.com/Cyfrin/TSender/)
-
 ---
 
 ## 🚀 Quick Start
@@ -17,6 +15,11 @@ Before you begin, ensure you have the following tools installed and verified:
 | **Node.js** | `node --version` | `v23.0.0+` |
 | **pnpm** | `pnpm --version` | `10.0.0+` |
 | **Git** | `git --version` | `2.33.0+` |
+
+Usefull Links
+1. Smart Contracts: [Cyfrin/TSender](https://github.com/Cyfrin/TSender/)
+2. Connect your wallet: [RainbowKit](https://rainbowkit.com)
+3. Reactivity for Ethereum apps: [Wagmi](https://wagmi.sh)
 
 ### 2. Environment Configuration
 
@@ -42,15 +45,19 @@ pnpm install
 
 # Start the local Anvil blockchain
 pnpm anvil
-
+-> go to metamask and import tokens from 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+-> Token Address: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+-> Recipients: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+-> Amount: 1
 ```
+
 
 > **Pro Tip:** Connect your MetaMask or Rabby wallet to your local Anvil instance. Use the accounts provided by Anvil to access mock tokens for testing.
 
 In a **separate terminal tab**, launch the web application:
 
 ```bash
-pnpm run dev
+pnpm dev
 
 ```
 
