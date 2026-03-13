@@ -1,18 +1,20 @@
 "use client"
 
 import { InputForm } from "@/components/ui/InputField"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { chainsToTSender, erc20Abi, tsenderAbi } from "@/constants"
-import { useChainId, useConfig, useConnection } from 'wagmi'
-import { readContract } from '@wagmi/core'
+import { useChainId, useConfig, useConnection } from "wagmi"
+import { readContract } from "@wagmi/core"
+import { calculateTotal } from "@/utils"
 
 export default function AirdropForm() {
     const [tokenAddress, setTokenAddress] = useState("")
     const [recipients, setRecipients] = useState("")
-    const [amount, setAmount] = useState("")
+    const [amounts, setAmounts] = useState("")
     const chainId = useChainId()
     const config = useConfig()
     const connection = useConnection()
+    const total: number = useMemo(() => calculateTotal(amounts), [amounts])
 
     async function getApprovedAmount(tSenderAddress: string | null): Promise<number> {
         if (!tSenderAddress) {
@@ -32,14 +34,17 @@ export default function AirdropForm() {
     async function handleSubmit() {
         console.log("tokenAddress", tokenAddress)
         console.log("recipients", recipients)
-        console.log("amount", amount)
+        console.log("amounts", amounts)
         console.log("chainId", chainId)
+        console.log("total", total)
 
         const tSenderAddress = chainsToTSender[chainId]["tsender"]
         const approvedAmount = await getApprovedAmount(tSenderAddress)
 
         console.log("tSenderAddress", tSenderAddress)
         console.log("approvedAmount", approvedAmount)
+
+
     }
 
     return (
@@ -58,10 +63,10 @@ export default function AirdropForm() {
                 large={true}
             />
             <InputForm
-                label="Amount"
+                label="Amounts"
                 placeholder="100,200,300,..."
-                value={amount}
-                onChange={e => setAmount(e.target.value)}
+                value={amounts}
+                onChange={e => setAmounts(e.target.value)}
                 large={true}
             />
             <button
@@ -81,3 +86,5 @@ export default function AirdropForm() {
         </div>
     )
 }
+
+
