@@ -6,6 +6,7 @@ import {
     useMemo,
     useEffect
 } from "react"
+import { CgSpinner } from "react-icons/cg"
 import {
     chainsToTSender,
     erc20Abi,
@@ -80,10 +81,26 @@ export default function AirdropForm() {
         ]
     })
 
-
     const total: number = useMemo(() => calculateTotal(amounts), [amounts])
+    const [hasEnoughTokens, setHasEnoughTokens] = useState(true)
+    useEffect(() => {
+        if (tokenAddress
+            && total > 0
+            && tokenData?.[2].result
+            && tokenData?.[2].result as number != undefined) {
+            const userBalance = tokenData?.[2].result as number
+            setHasEnoughTokens(userBalance > total)
+        } else {
+            setHasEnoughTokens(true)
+        }
+    }, [tokenAddress, total, tokenData])
 
-
+    const isDisabled: boolean =
+        isPending ||
+        !hasEnoughTokens ||
+        tokenAddress.trim() === "" ||
+        recipients.trim() === "" ||
+        total <= 0;
 
     async function getApprovedAmount(tSenderAddress: string | null): Promise<number> {
         if (!tSenderAddress) {
@@ -151,16 +168,46 @@ export default function AirdropForm() {
         }
     }
 
+    function getButtonContent() {
+        if (isPending)
+            return (
+                <div className="flex items-center justify-center gap-2 w-full">
+                    <CgSpinner className="animate-spin" size={20} />
+                    <span>Confirming in wallet...</span>
+                </div>
+            )
+        if (isConfirming)
+            return (
+                <div className="flex items-center justify-center gap-2 w-full">
+                    <CgSpinner className="animate-spin" size={20} />
+                    <span>Waiting for transaction to be included...</span>
+                </div>
+            )
+        if (error || isError) {
+            console.log(error)
+            return (
+                <div className="flex items-center justify-center gap-2 w-full">
+                    <span>Error, see console.</span>
+                </div>
+            )
+        }
+        if (isConfirmed) {
+            return "Transaction confirmed."
+        }
+        return "Send Tokens"
+    }
 
 
     return (
         <div>
+
             <InputForm
                 label="Token Address"
                 placeholder="0x"
                 value={tokenAddress}
                 onChange={e => setTokenAddress(e.target.value)}
             />
+
             <InputForm
                 label="Recipients"
                 placeholder="0x123,0x1234,0x12345,..."
@@ -168,6 +215,7 @@ export default function AirdropForm() {
                 onChange={e => setRecipients(e.target.value)}
                 large={true}
             />
+
             <InputForm
                 label="Amounts"
                 placeholder="100,200,300,..."
@@ -175,6 +223,7 @@ export default function AirdropForm() {
                 onChange={e => setAmounts(e.target.value)}
                 large={true}
             />
+
             <div className="bg-white border border-zinc-300 rounded-lg p-4">
                 <h3 className="text-sm font-medium text-zinc-900 mb-3">Transaction Details</h3>
                 <div className="space-y-2">
@@ -194,26 +243,39 @@ export default function AirdropForm() {
                         <span className="text-sm text-zinc-600">Amount (tokens):</span>
                         <span className="font-mono text-zinc-900">
                             {
-                                formatTokenAmount(total, tokenData?.[0]?.result as number)
+                                tokenData?.[0]?.result
+                                    ? formatTokenAmount(total, tokenData?.[0]?.result as number)
+                                    : ''
                             }
                         </span>
                     </div>
                 </div>
             </div>
+
             <button
                 onClick={handleSubmit}
-                className="
-    bg-blue-600 hover:bg-blue-700 
-    text-white font-semibold 
-    py-2 px-6 
-    rounded-lg 
-    shadow-md hover:shadow-lg 
-    transition-all duration-200 
-    active:scale-95 active:shadow-inner
-  "
+                className={`cursor-pointer flex items-center justify-center w-full py-3 rounded-[9px] 
+                    text-white transition-colors font-semibold relative border bg-blue-500 
+                    hover:bg-blue-600 border-blue-500"
+                        ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                disabled={isDisabled}
             >
-                Send Tokens
+                {/* Gradient */}
+                <div className="absolute w-full inset-0 bg-gradient-to-b from-white/25 via-80% 
+                    to-transparent mix-blend-overlay z-10 rounded-lg pointer-events-none" />
+                {/* Inner shadow */}
+                <div className="absolute w-full inset-0 mix-blend-overlay z-10 inner-shadow 
+                    rounded-lg pointer-events-none" />
+                {/* White inner border */}
+                <div className="absolute w-full inset-0 mix-blend-overlay z-10 border-[1.5px] 
+                    border-white/20 rounded-lg pointer-events-none" />
+                {isPending || error || isConfirming
+                    ? getButtonContent()
+                    : !hasEnoughTokens && tokenAddress
+                        ? "Insufficient token balance"
+                        : "Send Tokens"}
             </button>
+
         </div>
     )
 }
