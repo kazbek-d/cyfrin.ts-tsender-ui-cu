@@ -99,7 +99,12 @@ If `pnpm test:e2e` throws an error regarding a missing cache (e.g., `Error: Cach
 pnpm test:e2e
 
 ```
-
+4. **e2e tests**
+```bash
+npm add -D  @synthetixio/synpress
+pnpm create playwright@latest
+pnpm exec playwright test --ui
+```
 
 
 ---
