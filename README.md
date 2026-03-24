@@ -45,7 +45,7 @@ pnpm install
 
 # Start the local Anvil blockchain
 pnpm anvil
--> go to metamask and import tokens from 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+-> go to metamask and import tokens from 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
 -> Token Address: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
 -> Recipients: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 -> Amount: 1
@@ -126,3 +126,11 @@ Contributions make the open-source community an amazing place to learn, inspire,
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+
+
+--- 
+Add developer´s dependencies
+```bash
+pnpm add -D @playwright/test@latest @synthetixio/synpress@latest @tailwindcss/postcss@latest @types/node@latest @types/react@latest @types/react-dom@latest eslint@latest eslint-config-next@latest jsdom@latest tailwindcss@latest typescript@latest vite-tsconfig-paths@latest vitest@latest
+```
+
